@@ -40,8 +40,12 @@ export class AddEditUserComponent implements OnInit{
     this.usersService.getUserById(this.id).subscribe({
       next:(data) => {
         this.data = data;
+        console.log(this.data)
         if (this.data.dateOfBirth) {
-          formatDate(this.data.dateOfBirth, 'yyyy-MM-dd', 'en')
+          console.log('aqui');
+          this.data.dateOfBirth = formatDate(this.data.dateOfBirth, 'yyyy-MM-dd', 'en')
+          console.log(this.data.dateOfBirth);
+          
         }  
         this.loading = false
       },

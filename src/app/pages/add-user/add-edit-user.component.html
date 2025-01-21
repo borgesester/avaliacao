@@ -90,7 +90,7 @@
         id="phone"
         [(ngModel)]="data.phone"
         name="phone"
-        maxlength="11"
+        onkeypress="return /[0-9]/i.test(event.key)"
       />
     </div>
   </div>

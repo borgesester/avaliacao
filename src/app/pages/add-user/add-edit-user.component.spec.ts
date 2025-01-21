@@ -4,6 +4,7 @@ import { AddEditUserComponent } from './add-edit-user.component';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 describe('AddUserComponent', () => {
@@ -13,7 +14,7 @@ describe('AddUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AddEditUserComponent ],
-      imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, ModalModule.forRoot()],
       providers: [{
         provide: ActivatedRoute,
         useValue: {snapshot: {params: {'id': '123'}}}

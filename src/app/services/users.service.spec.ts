@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { UsersService } from './users.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -9,7 +10,7 @@ describe('UsersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ]
     });
     service = TestBed.inject(UsersService);
