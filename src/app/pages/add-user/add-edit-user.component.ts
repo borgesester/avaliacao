@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertModalService } from 'src/app/services/alert-modal.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Location } from 'src/app/shared/location.model';
 import { UserFull } from 'src/app/shared/user-full.model';
@@ -19,7 +20,8 @@ export class AddEditUserComponent implements OnInit{
   constructor(
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertModalService: AlertModalService
   ) { 
     
   }
@@ -38,7 +40,9 @@ export class AddEditUserComponent implements OnInit{
     this.usersService.getUserById(this.id).subscribe({
       next:(data) => {
         this.data = data;
-        this.data.dateOfBirth = formatDate(this.data.dateOfBirth, 'yyyy-MM-dd', 'en')
+        if (this.data.dateOfBirth) {
+          formatDate(this.data.dateOfBirth, 'yyyy-MM-dd', 'en')
+        }  
         this.loading = false
       },
     })
@@ -48,7 +52,12 @@ export class AddEditUserComponent implements OnInit{
     this.usersService.createUser(this.data).subscribe({
       next: (data) => {
         this.router.navigate(['/users'])
-      }
+        this.alertModalService.showAlertSuccess('Usuário cadastrado com sucesso.')
+      },
+      error: (err) =>  {
+        this.alertModalService.showAlertDanger('Ops! Não foi possível cadastrar esse usuário.')
+        this.router.navigate(['/users'])
+      },
     })
   }
 
@@ -56,14 +65,19 @@ export class AddEditUserComponent implements OnInit{
     this.usersService.UpdateUser(this.id, this.data).subscribe({
       next: (data) => {
         this.router.navigate(['/users'])
-      }
+        this.alertModalService.showAlertSuccess('Usuário atualizado com sucesso.')
+      },
+      error: (err) =>  {
+        this.alertModalService.showAlertDanger('Ops! Não foi possível atualizar esse usuário.')
+        this.router.navigate(['/users'])
+      },
     })
   }
 
   submit() {
     this.id ? this.updateUser() : this.createUser()
   }
-  getDate() {
+  getDate() {    
     let date = formatDate(new Date(), 'yyyy-MM-dd', 'en')
     return date
   }
