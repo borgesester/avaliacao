@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EMPTY, Subject, switchMap, take } from 'rxjs';
+import { AlertModalService } from 'src/app/services/alert-modal.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ListUser } from 'src/app/shared/list-user.model';
 
@@ -16,6 +17,7 @@ export class UsersListComponent implements OnInit {
   $result: Subject<boolean>
   constructor(
     private usersService: UsersService,
+    private alertModalService: AlertModalService
 
   ) {}
 
@@ -45,11 +47,28 @@ export class UsersListComponent implements OnInit {
   }
   deleteUser(id: string) {
     console.log(id);
-    this.usersService.deleteUser(id).subscribe({
-      next: (data) => {
-        window.location.reload()
-      }
-    })
+
+    const result$ = this.alertModalService.showConfirm(
+      'Confirmação',
+      'Você quer mesmo excluir este usuário?',
+      'Sim',
+      'Não'
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result ? this.usersService.deleteUser(id) : EMPTY
+        )
+      )
+      .subscribe({
+        next: () => {
+          location.reload();
+        },
+        error: () => {
+        },
+      });
 
   }
 }

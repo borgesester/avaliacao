@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -7,14 +8,24 @@ import { Subject } from 'rxjs';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent {
-  @Input() title: string;
-  @Input() body: string;
-  @Input() button: string;
-  @Output() action = new EventEmitter()
-  $result: Subject<boolean>
+  @Input() title: string = '';
+  @Input() body: string = '';
+  @Input() cancelTxt: string = 'Cancelar';
+  @Input() saveTxt: string = 'Salvar';
+  confirmResult: Subject<boolean> = new Subject();
 
+  constructor(private bsModalRef: BsModalRef) {}
 
-  setAction() {
-    this.action.emit(this.$result.next(true))
+  confirm() {
+    this.confirmAndClose(true);
+  }
+
+  onClose(): void {
+    this.confirmAndClose(false);
+  }
+
+  private confirmAndClose(value: boolean) {
+    this.confirmResult.next(value);
+    this.bsModalRef?.hide();
   }
 }

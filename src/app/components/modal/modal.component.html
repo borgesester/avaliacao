@@ -1,18 +1,23 @@
-
-  <div class="modal fade" style="display:block" id="modalContent" tabindex="-1" aria-labelledby="modalContentlLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalContentlLabel">{{title}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          {{body}}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="setAction();">{{button}}</button>
-        </div>
-      </div>
-    </div>
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ title }}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="onClose()"
+      aria-label="Close"
+    ></button>
   </div>
+  <div class="modal-body">
+    <p>{{ body }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onClose()">
+      {{ cancelTxt }}
+    </button>
+    <button type="button" class="btn btn-primary" (click)="confirm()">
+      {{ saveTxt }}
+    </button>
+  </div>
+</div>
+

@@ -7,6 +7,7 @@ import { NavBarModule } from './components/nav-bar/nav-bar.module';
 import { UsersListModule } from './pages/users-list/users-list.module';
 import { AddEditUserModule } from './pages/add-user/add-edit-user.module';
 import { UserModule } from './pages/user/user.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UserModule } from './pages/user/user.module';
     NavBarModule,
     UsersListModule,
     AddEditUserModule,
-    UserModule
+    UserModule,
+    ModalModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })
