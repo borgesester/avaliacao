@@ -1,0 +1,226 @@
+<form #addUser="ngForm" *ngIf="!loading">
+  <div class="row mt-3 mb-3">
+    <div class="col-md-4">
+      <label for="firstName" class="form-label"
+        >Nome<span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        minlength="2"
+        maxlength="50"
+        [(ngModel)]="data.firstName"
+        name="first"
+        #firstName="ngModel"
+        required
+        [class.is-invalid]="
+          firstName.errors && (firstName.dirty || firstName.touched)
+        "
+      />
+      <ng-template
+        ngIf="firstName.errors && (firstName.dirty || firstName.touched)"
+      >
+        <div [hidden]="!firstName.errors?.minlength" class="invalid-feedback">
+          O nome deve conter pelo menos 2 caracteres.
+        </div>
+        <div [hidden]="!firstName.errors?.required" class="invalid-feedback">
+          Digite um nome.
+        </div>
+      </ng-template>
+    </div>
+    <div class="col-md-4">
+      <label for="lastName" class="form-label"
+        >Sobrenome<span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        minlength="2"
+        maxlength="50"
+        [(ngModel)]="data.lastName"
+        name="last"
+        #lastName="ngModel"
+        required
+        [class.is-invalid]="
+          lastName.errors && (lastName.dirty || lastName.touched)
+        "
+      />
+      <ng-template
+        ngIf="lastName.errors && (lastName.dirty || lastName.touched)"
+      >
+        <div [hidden]="!lastName.errors?.minlength" class="invalid-feedback">
+          O sobrenome deve conter pelo menos 2 caracteres.
+        </div>
+        <div [hidden]="!lastName.errors?.required" class="invalid-feedback">
+          Digite um sobrenome.
+        </div>
+      </ng-template>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <select name="title" [(ngModel)]="data.title" class="form-select">
+        <option value="undefined">Escolha um título</option>
+        <option value="mr">Mr</option>
+        <option value="ms">Ms</option>
+        <option value="mrs">Mrs</option>
+        <option value="miss">Miss</option>
+        <option value="dr">Dr</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="dateOfBirth" class="form-label">Data de Nascimento</label>
+      <input
+        id="dateOfBirth"
+        class="form-control"
+        type="date"
+        min="1900-01-01"
+        [(ngModel)]="data.dateOfBirth"
+        name="date"
+        [max]="getDate()"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="phone" class="form-label">Telefone</label>
+      <input
+        inputmode="numeric"
+        class="form-control"
+        id="phone"
+        [(ngModel)]="data.phone"
+        name="phone"
+        onkeypress="return /[0-9]/i.test(event.key)"
+      />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label for="email" class="form-label"
+        >E-mail<span class="text-danger">*</span></label
+      >
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="data.email"
+        name="email"
+        #email="ngModel"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,5}$"
+        [class.is-invalid]="email.errors && (email.dirty || email.touched)"
+      />
+      <ng-template ngIf="email.errors && (email.dirty || email.touched)">
+        <div [hidden]="!email.errors?.required" class="invalid-feedback">
+          Digite um e-mail.
+        </div>
+        <div [hidden]="!email.errors?.email" class="invalid-feedback">
+          Digite um e-mail válido.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-9">
+      <label for="link" class="form-label">Link da imagem</label>
+      <input
+        type="text"
+        class="form-control"
+        id="link"
+        name="link"
+        [(ngModel)]="data.picture"
+      />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+      <select class="form-select" name="gender" [(ngModel)]="data.gender">
+        <option value="undefined">Gênero</option>
+        <option value="female">Feminino</option>
+        <option value="male">Masculino</option>
+        <option value="other">Outro</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label for="street" class="form-label">Rua</label>
+      <input
+        type="text"
+        class="form-control"
+        id="street"
+        [(ngModel)]="data.location.street"
+        name="street"
+        minlength="5"
+        maxlength="100"
+      />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="city" class="form-label">Cidade</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        name="city"
+        [(ngModel)]="data.location.city"
+        minlength="2"
+        maxlength="30"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="state" class="form-label">Estado</label>
+      <input
+        type="text"
+        class="form-control"
+        id="state"
+        name="state"
+        [(ngModel)]="data.location.state"
+        minlength="2"
+        maxlength="30"
+      />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="country" class="form-label">País</label>
+      <input
+        type="text"
+        class="form-control"
+        id="country"
+        name="country"
+        [(ngModel)]="data.location.country"
+        minlength="2"
+        maxlength="30"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="timezone" class="form-label">Fuso Horário</label>
+      <input
+        type="text"
+        class="form-control"
+        id="timezone"
+        name="timezone"
+        [(ngModel)]="data.location.timezone"
+      />
+    </div>
+  </div>
+  <div class="row text-center mb-3">
+    <div class="col-md-12">
+      <button
+        type="button"
+        class="btn btn-primary mx-3 btn-lg"
+        (click)="submit()"
+        [disabled]="!addUser.form.valid"
+      >
+        {{ id ? "Atualizar" : "Cadastrar" }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary btn-lg"
+        [routerLink]="['/users']"
+      >
+        Voltar
+      </button>
+    </div>
+  </div>
+</form>

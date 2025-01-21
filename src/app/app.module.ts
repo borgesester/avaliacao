@@ -3,6 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NavBarModule } from './components/nav-bar/nav-bar.module';
+import { UsersListModule } from './pages/users-list/users-list.module';
+import { AddEditUserModule } from './pages/add-user/add-edit-user.module';
+import { UserModule } from './pages/user/user.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 @NgModule({
   declarations: [
@@ -10,9 +16,13 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NavBarModule,
+    UsersListModule,
+    AddEditUserModule,
+    UserModule,
+    ModalModule.forRoot()
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
