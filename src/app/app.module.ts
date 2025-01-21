@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarModule } from './components/nav-bar/nav-bar.module';
 import { UsersListModule } from './pages/users-list/users-list.module';
+import { AddEditUserModule } from './pages/add-user/add-edit-user.module';
+import { UserModule } from './pages/user/user.module';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { UsersListModule } from './pages/users-list/users-list.module';
     BrowserModule,
     AppRoutingModule,
     NavBarModule,
-    UsersListModule
+    UsersListModule,
+    AddEditUserModule,
+    UserModule
   ],
   bootstrap: [AppComponent]
 })

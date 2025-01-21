@@ -1,6 +1,6 @@
 <div class="d-flex flex-row-reverse mt-5">
   <button type="button" class="btn btn-primary btn-lg">
-    <i class="bi bi-plus-lg text-white"><span class="mx-1">Novo</span></i>
+    <i class="bi bi-plus-lg text-white"><span class="mx-1" [routerLink]="['/add']" >Novo</span></i>
   </button>
 </div>
 <div *ngIf="!loading">
@@ -16,16 +16,15 @@
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
         <td class="text-end">
-          <a class="icon-link icon-link-hover cursor">
+          <a [routerLink]="['/user', item.id]" class="icon-link icon-link-hover cursor">
             <i class="bi bi-person-fill mx-3 h3" ></i>
           </a>
-          <a class="icon-link icon-link-hover cursor">
+          <a [routerLink]="['/edit', item.id]" class="icon-link icon-link-hover cursor">
             <i class="bi bi-pencil-square mx-3 h3"></i>
           </a>
-          <a class="icon-link icon-link-hover cursor">
+          <a class="icon-link icon-link-hover cursor" (click)="deleteUser(item.id)">
             <i class="bi bi-x-lg mx-3 h3 text-danger"></i>
-          </a>
-          
+          </a> 
         </td>
       </tr>
     </tbody>
@@ -48,3 +47,6 @@
     </nav>
   </div>
 </div>
+
+
+

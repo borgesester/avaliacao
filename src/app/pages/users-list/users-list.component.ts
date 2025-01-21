@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Subject } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
 import { ListUser } from 'src/app/shared/list-user.model';
 
@@ -12,8 +13,10 @@ export class UsersListComponent implements OnInit {
   page: number = 0;
   pages: number[]
   loading: boolean;
+  $result: Subject<boolean>
   constructor(
     private usersService: UsersService,
+
   ) {}
 
   ngOnInit(): void {
@@ -23,11 +26,11 @@ export class UsersListComponent implements OnInit {
   getUsersList(page: number) {  
     this.page = page
     this.loading = true
-    this.usersService.getUsers(page).subscribe({
+    this.usersService.getUsers(page).subscribe({      
       next: (data) => {
         this.loading = false
         this.data = data
-        this.pages = this.getNpages(Math.floor(data.total / data.limit)) 
+        this.pages = this.getNpages(Math.ceil(data.total / data.limit)) 
       },
     })
   }
@@ -39,5 +42,14 @@ export class UsersListComponent implements OnInit {
     if(page !== this.page) {
       this.getUsersList(page)
     }
+  }
+  deleteUser(id: string) {
+    console.log(id);
+    this.usersService.deleteUser(id).subscribe({
+      next: (data) => {
+        window.location.reload()
+      }
+    })
+
   }
 }
